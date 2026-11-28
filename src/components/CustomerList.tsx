@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import type { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import type { CustomerData } from "../type";
-//import IconButton from "@mui/material/IconButton";
-//import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Snackbar from "@mui/material/Snackbar";
 import { getCustomers } from "../customerapi";
 import AddCustomer from "./AddCustomer";
+import UpdateCustomer from "./UpdateCustomer";
+import { deleteCustomer } from "../customerapi";
 
 
 function CustomerList() {
@@ -22,22 +24,24 @@ function CustomerList() {
         { field: 'email', headerName: 'Email' },
         { field: 'phone', headerName: 'Phone' },
         {
-            field: '_links.self.href',
-            headerName: ' '
-            //renderCell: (params: GridRenderCellParams) =>
-            //    <IconButton onClick={() => handleDelete(params.row._links.self.href)}>
-            //        <DeleteIcon color="error" />
-            //    </IconButton>
+            field: '_links.customer.href',
+            headerName: ' ',
+            renderCell: (params: GridRenderCellParams) =>
+                <UpdateCustomer fetchCustomers={fetchCustomers} customerData={params.row} />
         },
         {
-            field: '_links.customer.href',
-            headerName: ' '
-            //renderCell: (params: GridRenderCellParams) =>
-            //    <UpdateCustomer fetchCustomers={fetchCustomers} customerData={params.row} />
+            field: '_links.self.href',
+            headerName: ' ',
+            renderCell: (params: GridRenderCellParams) =>
+                <IconButton onClick={() => handleDelete(params.row._links.self.href)}>
+                    <DeleteIcon color="error" />
+                </IconButton>
         },
         {
             field: '_links.trainings.href,',
-            headerName: ' '
+            headerName: ' ',
+            rendercell: (params: GridRenderCellParams) =>
+                <UpdateTrainings fetchTrainings={fetchTrainings} trainingsData={params.row} />
         }
     ]
 
@@ -51,16 +55,16 @@ function CustomerList() {
         fetchCustomers();
     }, []);
 
-    // const handleDelete = (url: string) => {
-    //    if (window.confirm("Are you sure")) {
-    //         deleteCustomer(url)
-    //             .then(() => {
-    //                 fetchCustomers();
-    //                 setOpen(true);
-    //             })
-    //             .catch(err => console.error(err))
-    //     }
-    //}
+    const handleDelete = (url: string) => {
+        if (window.confirm("Are you sure")) {
+            deleteCustomer(url)
+                .then(() => {
+                    fetchCustomers();
+                    setOpen(true);
+                })
+                .catch(err => console.error(err))
+        }
+    }
 
     return (
         <>

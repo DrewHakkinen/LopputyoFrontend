@@ -5,6 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
 import CustomerForm from "./CustomerForm";
+import { addCustomer } from "../customerapi";
 
 
 type AddCustomerProps = {
@@ -24,7 +25,7 @@ export default function AddCustomer(props: AddCustomerProps) {
     };
 
     const handleSubmit = () => {
-        AddCustomer(customer)
+        addCustomer(customer)
             .then(() => props.fetchCustomers())
             .catch(err => console.error(err))
         handleClose();

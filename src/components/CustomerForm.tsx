@@ -60,7 +60,7 @@ function CustomerForm({ customer, setCustomer }: CustomerFormProps) {
                 required
                 margin="dense"
                 label="Email"
-                value={customer.city}
+                value={customer.email}
                 onChange={e => setCustomer({ ...customer, email: e.target.value })}
                 fullWidth
                 variant="standard"
