@@ -12,6 +12,17 @@ export function getCustomers() {
         })
 }
 
+export function getCustomerbyId() {
+    return fetch(import.meta.env.VITE_API_URL + "/customers/{id}")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error when fetching customer");
+            }
+
+            return response.json();
+        })
+}
+
 export function deleteCustomer(url: string) {
     return fetch(url, { method: 'DELETE' })
         .then(response => {
