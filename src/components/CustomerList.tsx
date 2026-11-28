@@ -6,6 +6,7 @@ import type { CustomerData } from "../type";
 //import DeleteIcon from "@mui/icons-material/Delete";
 import Snackbar from "@mui/material/Snackbar";
 import { getCustomers } from "../customerapi";
+import AddCustomer from "./AddCustomer";
 
 
 function CustomerList() {
@@ -22,7 +23,7 @@ function CustomerList() {
         { field: 'phone', headerName: 'Phone' },
         {
             field: '_links.self.href',
-            headerName: ' ',
+            headerName: ' '
             //renderCell: (params: GridRenderCellParams) =>
             //    <IconButton onClick={() => handleDelete(params.row._links.self.href)}>
             //        <DeleteIcon color="error" />
@@ -30,9 +31,13 @@ function CustomerList() {
         },
         {
             field: '_links.customer.href',
-            headerName: ' ',
+            headerName: ' '
             //renderCell: (params: GridRenderCellParams) =>
             //    <UpdateCustomer fetchCustomers={fetchCustomers} customerData={params.row} />
+        },
+        {
+            field: '_links.trainings.href,',
+            headerName: ' '
         }
     ]
 
@@ -59,6 +64,7 @@ function CustomerList() {
 
     return (
         <>
+            <AddCustomer fetchCustomers={fetchCustomers} />
             <div style={{ width: '90%', height: 500, marginTop: 10 }}>
                 <DataGrid
                     rows={customers || []}
